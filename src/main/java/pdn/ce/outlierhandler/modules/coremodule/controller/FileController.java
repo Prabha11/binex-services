@@ -20,6 +20,8 @@ public class FileController {
 
     @GetMapping("/files")
     public List<FileStructure> getAllFiles() throws IOException {
-        return fileReadService.getRootFileStructureByUserID(1);
+        List<FileStructure> files = fileReadService.getRootFileStructureByUserID(1);
+        files.addAll(fileReadService.getSampleDataFiles());
+        return files;
     }
 }
