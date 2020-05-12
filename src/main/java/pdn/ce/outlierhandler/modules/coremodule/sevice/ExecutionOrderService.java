@@ -16,4 +16,16 @@ public class ExecutionOrderService {
         ExecutionOrder savedExecutionOrder = executionOrderRepository.save(executionOrder);
         return savedExecutionOrder.getProgress();
     }
+
+    public void updateLog(long executionOrderID, String logSentence) {
+        ExecutionOrder executionOrder = executionOrderRepository.getOne(executionOrderID);
+        executionOrder.setLog(executionOrder.getLog() + logSentence);
+        executionOrderRepository.save(executionOrder);
+    }
+
+    public void markAsFinishedOrder(long executionOrderID) {
+        ExecutionOrder executionOrder = executionOrderRepository.getOne(executionOrderID);
+        executionOrder.setFinished(true);
+        executionOrderRepository.save(executionOrder);
+    }
 }
