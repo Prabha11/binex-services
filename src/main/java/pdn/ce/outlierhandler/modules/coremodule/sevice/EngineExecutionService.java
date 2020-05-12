@@ -1,8 +1,6 @@
 package pdn.ce.outlierhandler.modules.coremodule.sevice;
 
 import org.springframework.stereotype.Service;
-import pdn.ce.outlierhandler.modules.coremodule.util.ProcessExitDetector;
-import pdn.ce.outlierhandler.modules.coremodule.util.ProcessListener;
 
 import java.util.*;
 import java.io.IOException;
@@ -29,13 +27,6 @@ public class EngineExecutionService {
                     PYTHON_PATH + SCRIPT_PATH + getArguments(arguments),
                     null);
             System.out.println(process);
-            ProcessExitDetector processExitDetector = new ProcessExitDetector(process);
-            processExitDetector.addProcessListener(new ProcessListener() {
-                public void processFinished(Process process) {
-                    System.out.println("The subprocess has finished.");
-                }
-            });
-            processExitDetector.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
