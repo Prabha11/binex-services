@@ -12,4 +12,7 @@ import java.util.List;
 public interface FileStructureRepository extends JpaRepository<FileStructure, Long> {
     @Query("SELECT fs FROM FileStructure fs WHERE fs.user.id = :userID AND fs.name = 'ROOT'")
     List<FileStructure> findRootByUserID(@Param("userID") long userID);
+
+    @Query("SELECT fs FROM FileStructure fs WHERE fs.name = 'Sample Data'")
+    List<FileStructure> getSampleDataFiles();
 }
