@@ -31,4 +31,8 @@ public class FileReadService {
     public List<FileStructure> getRootFileStructureByUserID(long userID) {
         return fileStructureRepository.findRootByUserID(userID);
     }
+
+    public List<FileStructure> getSampleDataFiles() {
+        return fileStructureRepository.getSampleDataFiles();
+    }
 }
