@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "oh_execution_response")
+@Table(name = "oh_execution_response_data")
 public class ExecutionResponseData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

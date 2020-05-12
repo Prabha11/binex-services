@@ -3,7 +3,7 @@ package pdn.ce.outlierhandler.modules.coremodule.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "oh_execution_response")
+@Table(name = "oh_bin_data")
 public class BinData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
