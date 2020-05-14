@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pdn.ce.outlierhandler.modules.coremodule.model.ExecutionOrder;
 import pdn.ce.outlierhandler.modules.coremodule.model.ExecutionRequest;
+import pdn.ce.outlierhandler.modules.coremodule.model.JobCard;
 import pdn.ce.outlierhandler.modules.coremodule.model.User;
 import pdn.ce.outlierhandler.modules.coremodule.repository.ExecutionOrderRepository;
+import pdn.ce.outlierhandler.modules.coremodule.repository.JobCardRepository;
 
 import java.io.IOException;
 
@@ -15,14 +17,28 @@ public class ProcessSchedulingService {
     ProcessManagementService processManagementService;
     @Autowired
     ExecutionOrderRepository executionOrderRepository;
+    @Autowired
+    JobCardRepository jobCardRepository;
 
-    public String createAProcessSchedule(ExecutionRequest executionRequest, User user) throws IOException {
+    public JobCard createAProcessSchedule(ExecutionRequest executionRequest, User user) throws IOException {
         ExecutionOrder executionOrder = new ExecutionOrder();
         executionOrder.setExecutionRequest(executionRequest);
         executionOrder.setUser(user);
 
         long executionOrderID = this.executionOrderRepository.save(executionOrder).getId();
 
-        return processManagementService.startAExecutionProcess();
+        JobCard jobCard = this.getJobCard(executionOrderID, user, executionRequest);
+
+        processManagementService.startAExecutionProcess(executionOrderID);
+
+        return jobCard;
+    }
+
+    private JobCard getJobCard(long executionOrderID, User user, ExecutionRequest executionRequest) {
+        JobCard jobCard = new JobCard();
+        jobCard.setExecutionOrderID(executionOrderID);
+        jobCard.setUser(user);
+        jobCard.setCardName(executionRequest.getOutputFile().getName());
+        return jobCardRepository.save(jobCard);
     }
 }

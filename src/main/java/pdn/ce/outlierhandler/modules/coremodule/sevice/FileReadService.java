@@ -18,6 +18,7 @@ public class FileReadService {
     @Autowired
     private FileStructureRepository fileStructureRepository;
     private static final String FILE_ROOT = "E:\\Projects\\fyp\\engine\\Model python file\\sample_data";
+    private static final String FILE_ROOT_FOR_PYTHON = "../engine/Model python file/sample_data/10s/";
 
     public List<String> getListOfAllFiles() throws IOException {
         Stream<Path> walk = Files.walk(Paths.get(FILE_ROOT));
@@ -34,5 +35,9 @@ public class FileReadService {
 
     public List<FileStructure> getSampleDataFiles() {
         return fileStructureRepository.getSampleDataFiles();
+    }
+
+    public String getFilePathForPython(FileStructure fileStructure) {
+        return FILE_ROOT_FOR_PYTHON + fileStructure.getFileLocation();
     }
 }

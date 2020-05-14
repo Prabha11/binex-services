@@ -23,6 +23,8 @@ public class ExecutionRequest {
     @ManyToOne(cascade = CascadeType.ALL)
     private FileStructure inputFile6;
     @ManyToOne(cascade = CascadeType.ALL)
+    private FileStructure inputFile7;
+    @ManyToOne(cascade = CascadeType.ALL)
     private FileStructure outputFile;
 
     public long getId() {
@@ -87,6 +89,14 @@ public class ExecutionRequest {
 
     public void setInputFile6(FileStructure inputFile6) {
         this.inputFile6 = inputFile6;
+    }
+
+    public FileStructure getInputFile7() {
+        return inputFile7;
+    }
+
+    public void setInputFile7(FileStructure inputFile7) {
+        this.inputFile7 = inputFile7;
     }
 
     public FileStructure getOutputFile() {

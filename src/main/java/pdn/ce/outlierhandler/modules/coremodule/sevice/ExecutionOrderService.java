@@ -28,4 +28,8 @@ public class ExecutionOrderService {
         executionOrder.setFinished(true);
         executionOrderRepository.save(executionOrder);
     }
+
+    public ExecutionOrder getExecutionServiceByID(long executionOrderID) {
+        return executionOrderRepository.getOne(executionOrderID);
+    }
 }
