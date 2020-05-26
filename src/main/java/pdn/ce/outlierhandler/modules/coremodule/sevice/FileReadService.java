@@ -40,4 +40,8 @@ public class FileReadService {
     public String getFilePathForPython(FileStructure fileStructure) {
         return FILE_ROOT_FOR_PYTHON + fileStructure.getFileLocation();
     }
+
+    public String getFilePath(FileStructure fileStructure) {
+        return FILE_ROOT + "\\10s\\" + fileStructure.getFileLocation();
+    }
 }

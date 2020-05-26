@@ -8,6 +8,8 @@ public class ExecutionRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+    @Column(name = "email_address")
+    private String emailAddress;
     @Column(name = "dataset")
     private String dataset;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -33,6 +35,14 @@ public class ExecutionRequest {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getDataset() {

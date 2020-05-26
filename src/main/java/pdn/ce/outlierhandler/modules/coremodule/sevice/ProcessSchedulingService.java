@@ -2,10 +2,7 @@ package pdn.ce.outlierhandler.modules.coremodule.sevice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pdn.ce.outlierhandler.modules.coremodule.model.ExecutionOrder;
-import pdn.ce.outlierhandler.modules.coremodule.model.ExecutionRequest;
-import pdn.ce.outlierhandler.modules.coremodule.model.JobCard;
-import pdn.ce.outlierhandler.modules.coremodule.model.User;
+import pdn.ce.outlierhandler.modules.coremodule.model.*;
 import pdn.ce.outlierhandler.modules.coremodule.repository.ExecutionOrderRepository;
 import pdn.ce.outlierhandler.modules.coremodule.repository.JobCardRepository;
 
@@ -20,6 +17,10 @@ public class ProcessSchedulingService {
     @Autowired
     ExecutionOrderService executionOrderService;
     @Autowired
+    FileReadService fileReadService;
+    @Autowired
+    MailingService mailingService;
+    @Autowired
     JobCardRepository jobCardRepository;
 
     public JobCard createAProcessSchedule(ExecutionRequest executionRequest, User user) throws IOException {
@@ -30,9 +31,24 @@ public class ProcessSchedulingService {
         long executionOrderID = this.executionOrderRepository.save(executionOrder).getId();
 
         JobCard jobCard = this.getJobCard(executionOrderID, user, executionRequest);
-        processManagementService.startAExecutionProcess(executionOrderID);
+        boolean finished = processManagementService.startAExecutionProcess(executionOrderID);
+
+        if (finished) sendFinishMail(executionRequest);
 
         return jobCard;
+    }
+
+    private void sendFinishMail(ExecutionRequest executionRequest) {
+        Email email = new Email();
+        email.setSubject("Result of binning process");
+        System.out.println(executionRequest.getEmailAddress());
+        email.setTo(executionRequest.getEmailAddress());
+        email.setAttachment(fileReadService.getFilePath(executionRequest.getOutputFile()));
+        try {
+            mailingService.send(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private JobCard getJobCard(long executionOrderID, User user, ExecutionRequest executionRequest) {

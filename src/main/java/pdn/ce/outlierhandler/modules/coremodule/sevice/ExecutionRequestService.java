@@ -16,6 +16,7 @@ public class ExecutionRequestService {
     public ExecutionRequest validateExecutionRequest(ExecutionRequest executionRequest, User user)
             throws NullPointerException {
         ExecutionRequest validatedExecutionRequest = new ExecutionRequest();
+        validatedExecutionRequest.setEmailAddress(executionRequest.getEmailAddress());
         validatedExecutionRequest.setDataset(executionRequest.getDataset());
         validatedExecutionRequest.setInputFile1(
                 fileStructureRepository.getOne(executionRequest.getInputFile1().getId()));

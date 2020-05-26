@@ -24,7 +24,7 @@ public class ProcessManagementService {
     @Autowired
     TaskExecutor taskExecutor;
 
-    public String startAExecutionProcess(long executionOrderID) throws IOException {
+    public boolean startAExecutionProcess(long executionOrderID) throws IOException {
         ExecutionOrder executionOrder = executionOrderService.getExecutionServiceByID(executionOrderID);
         List<String> args = getArgsListByExecutionRequest(executionOrder.getExecutionRequest());
 
@@ -58,11 +58,12 @@ public class ProcessManagementService {
         while ((s = stdError.readLine()) != null) {
             System.out.println(s);
             outputBuffer.append(s);
+            return false;
         }
 
         executionOrderService.markAsFinishedOrder(executionOrderID);
 
-        return process.toString() + " " + outputBuffer.toString();
+        return true;
     }
 
     private List<String> getArgsListByExecutionRequest(ExecutionRequest executionRequest) {
