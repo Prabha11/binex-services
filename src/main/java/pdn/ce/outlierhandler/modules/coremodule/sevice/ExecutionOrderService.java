@@ -1,9 +1,13 @@
 package pdn.ce.outlierhandler.modules.coremodule.sevice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pdn.ce.outlierhandler.modules.coremodule.model.ExecutionOrder;
 import pdn.ce.outlierhandler.modules.coremodule.repository.ExecutionOrderRepository;
+
+import java.util.List;
 
 @Service
 public class ExecutionOrderService {
@@ -31,5 +35,11 @@ public class ExecutionOrderService {
 
     public ExecutionOrder getExecutionServiceByID(long executionOrderID) {
         return executionOrderRepository.getOne(executionOrderID);
+    }
+
+    public ExecutionOrder getOneUnfinishedExecutionOrder() {
+        Pageable pageable =  PageRequest.of(0, 1);
+        List<ExecutionOrder> executionOrders = executionOrderRepository.getOneUnfinishedExecutionOrder(pageable);
+        return !executionOrders.isEmpty() ? executionOrders.get(0) : null;
     }
 }

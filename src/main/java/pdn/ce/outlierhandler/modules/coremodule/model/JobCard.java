@@ -1,5 +1,7 @@
 package pdn.ce.outlierhandler.modules.coremodule.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class JobCard {
     private long executionOrderID;
     @Column(name = "card_name")
     private String cardName;
+    @JsonIgnore
     @ManyToOne
     private User user;
 

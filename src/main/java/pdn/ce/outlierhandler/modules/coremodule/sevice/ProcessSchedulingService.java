@@ -18,6 +18,8 @@ public class ProcessSchedulingService {
     @Autowired
     ExecutionOrderRepository executionOrderRepository;
     @Autowired
+    ExecutionOrderService executionOrderService;
+    @Autowired
     JobCardRepository jobCardRepository;
 
     public JobCard createAProcessSchedule(ExecutionRequest executionRequest, User user) throws IOException {
@@ -28,7 +30,6 @@ public class ProcessSchedulingService {
         long executionOrderID = this.executionOrderRepository.save(executionOrder).getId();
 
         JobCard jobCard = this.getJobCard(executionOrderID, user, executionRequest);
-
         processManagementService.startAExecutionProcess(executionOrderID);
 
         return jobCard;
@@ -40,5 +41,22 @@ public class ProcessSchedulingService {
         jobCard.setUser(user);
         jobCard.setCardName(executionRequest.getOutputFile().getName());
         return jobCardRepository.save(jobCard);
+    }
+
+    public boolean runUnfinishedTask() {
+        ExecutionOrder executionOrder = executionOrderService.getOneUnfinishedExecutionOrder();
+        if (executionOrder != null) {
+            System.out.println(executionOrder.getId());
+            executionOrder.setProgress(1);
+            try {
+                processManagementService.startAExecutionProcess(executionOrder.getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+                executionOrder.setProgress(0);
+                return false;
+            }
+        }
+
+        return true;
     }
 }
