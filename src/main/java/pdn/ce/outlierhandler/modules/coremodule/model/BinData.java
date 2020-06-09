@@ -8,6 +8,8 @@ public class BinData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+    @Column(name = "bin_name")
+    private String binName;
     @Column(name = "number_of_contigs_in_old_bin")
     private int numberOfContigsInOldBin;
     @Column(name = "number_of_contigs_in_new_bin")
@@ -19,6 +21,14 @@ public class BinData {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getBinName() {
+        return binName;
+    }
+
+    public void setBinName(String binName) {
+        this.binName = binName;
     }
 
     public int getNumberOfContigsInOldBin() {

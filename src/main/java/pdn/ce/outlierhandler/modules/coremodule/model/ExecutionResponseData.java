@@ -9,10 +9,18 @@ public class ExecutionResponseData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<BinData> bins;
     @OneToOne
     private FileStructure results;
+    @Column(name = "old_percentage")
+    private double oldPercentage;
+    @Column(name = "new_percentage")
+    private double newPercentage;
+    @Column(name = "old_accuracy")
+    private double oldAccuracy;
+    @Column(name = "new_accuracy")
+    private double newAccuracy;
 
     public long getId() {
         return id;
@@ -36,5 +44,37 @@ public class ExecutionResponseData {
 
     public void setResults(FileStructure results) {
         this.results = results;
+    }
+
+    public double getOldPercentage() {
+        return oldPercentage;
+    }
+
+    public void setOldPercentage(double oldPercentage) {
+        this.oldPercentage = oldPercentage;
+    }
+
+    public double getNewPercentage() {
+        return newPercentage;
+    }
+
+    public void setNewPercentage(double newPercentage) {
+        this.newPercentage = newPercentage;
+    }
+
+    public double getOldAccuracy() {
+        return oldAccuracy;
+    }
+
+    public void setOldAccuracy(double oldAccuracy) {
+        this.oldAccuracy = oldAccuracy;
+    }
+
+    public double getNewAccuracy() {
+        return newAccuracy;
+    }
+
+    public void setNewAccuracy(double newAccuracy) {
+        this.newAccuracy = newAccuracy;
     }
 }

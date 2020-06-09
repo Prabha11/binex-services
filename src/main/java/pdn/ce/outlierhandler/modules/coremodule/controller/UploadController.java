@@ -1,23 +1,38 @@
 package pdn.ce.outlierhandler.modules.coremodule.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pdn.ce.outlierhandler.modules.coremodule.model.FileStructure;
+import pdn.ce.outlierhandler.modules.coremodule.model.User;
+import pdn.ce.outlierhandler.modules.coremodule.repository.FileStructureRepository;
+import pdn.ce.outlierhandler.modules.coremodule.repository.UserRepository;
 import pdn.ce.outlierhandler.modules.coremodule.tempmodel.FileContainer;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class UploadController {
+    @Autowired
+    UserRepository ur;
+    @Autowired
+    FileStructureRepository fileStructureRepository;
 
     //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "E://temp//";
+    private static String UPLOADED_FOLDER = ".//files//";
 
     @GetMapping("/file")
     public String index() {
@@ -25,14 +40,12 @@ public class UploadController {
     }
 
     @PostMapping("/file/upload") // //new annotation since 4.3
-    public String singleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("one") String yay,
+    public boolean singleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("parentFolderId") long parentFolderId,
                                    RedirectAttributes redirectAttributes) {
-//        MultipartFile file = fileContainer.getFile();
-        System.out.println(file);
-        System.out.println(yay);
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
+            return false;
         }
 
         try {
@@ -46,10 +59,42 @@ public class UploadController {
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
 
-        return "redirect:/uploadStatus";
+        User user = ur.getOne((long) 1);
+
+        FileStructure fileStructure = new FileStructure();
+        fileStructure.setUser(user);
+        fileStructure.setName(file.getOriginalFilename());
+        fileStructure.setFolder(false);
+        fileStructure.setFileLocation(file.getOriginalFilename());
+
+        FileStructure parentFolder = fileStructureRepository.getOne(parentFolderId);
+        List<FileStructure> childFolders = parentFolder.getChildFileStructures();
+        childFolders.add(fileStructure);
+        parentFolder.setChildFileStructures(childFolders);
+
+        fileStructureRepository.save(parentFolder);
+
+        return true;
+    }
+
+    @GetMapping("/file/download/{fileID}")
+    public StreamingResponseBody getSteamingFile(HttpServletResponse response,
+                                                 @PathVariable long fileID) throws IOException {
+        FileStructure file = fileStructureRepository.getOne(fileID);
+        response.setContentType("application/png");
+        response.setHeader("Content-Disposition", "attachment; filename=\"download.png\"");
+        InputStream inputStream = new FileInputStream(new File("E:\\temp\\download.png"));
+        return outputStream -> {
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                System.out.println("Writing some bytes..");
+                outputStream.write(data, 0, nRead);
+            }
+        };
     }
 
     @GetMapping("/uploadStatus")

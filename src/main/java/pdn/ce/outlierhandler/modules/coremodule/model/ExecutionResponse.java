@@ -5,9 +5,6 @@ public class ExecutionResponse {
     private FileStructure inputFile1;
     private FileStructure inputFile2;
     private FileStructure inputFile3;
-    private FileStructure inputFile4;
-    private FileStructure inputFile5;
-    private FileStructure inputFile6;
     private FileStructure outputFile;
     private ExecutionResponseData executionResponseData;
 
@@ -16,9 +13,6 @@ public class ExecutionResponse {
         this.inputFile1 = executionRequest.getInputFile1();
         this.inputFile2 = executionRequest.getInputFile2();
         this.inputFile3 = executionRequest.getInputFile3();
-        this.inputFile4 = executionRequest.getInputFile4();
-        this.inputFile5 = executionRequest.getInputFile5();
-        this.inputFile6 = executionRequest.getInputFile6();
         this.outputFile = executionRequest.getOutputFile();
         this.executionResponseData = executionOrder.getExecutionResponseData();
     }
@@ -53,30 +47,6 @@ public class ExecutionResponse {
 
     public void setInputFile3(FileStructure inputFile3) {
         this.inputFile3 = inputFile3;
-    }
-
-    public FileStructure getInputFile4() {
-        return inputFile4;
-    }
-
-    public void setInputFile4(FileStructure inputFile4) {
-        this.inputFile4 = inputFile4;
-    }
-
-    public FileStructure getInputFile5() {
-        return inputFile5;
-    }
-
-    public void setInputFile5(FileStructure inputFile5) {
-        this.inputFile5 = inputFile5;
-    }
-
-    public FileStructure getInputFile6() {
-        return inputFile6;
-    }
-
-    public void setInputFile6(FileStructure inputFile6) {
-        this.inputFile6 = inputFile6;
     }
 
     public FileStructure getOutputFile() {

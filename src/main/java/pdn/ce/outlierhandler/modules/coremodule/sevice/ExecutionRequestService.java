@@ -24,14 +24,6 @@ public class ExecutionRequestService {
                 fileStructureRepository.getOne(executionRequest.getInputFile2().getId()));
         validatedExecutionRequest.setInputFile3(
                 fileStructureRepository.getOne(executionRequest.getInputFile3().getId()));
-        validatedExecutionRequest.setInputFile4(
-                fileStructureRepository.getOne(executionRequest.getInputFile4().getId()));
-        validatedExecutionRequest.setInputFile5(
-                fileStructureRepository.getOne(executionRequest.getInputFile5().getId()));
-        validatedExecutionRequest.setInputFile6(
-                fileStructureRepository.getOne(executionRequest.getInputFile6().getId()));
-        validatedExecutionRequest.setInputFile7(
-                fileStructureRepository.getOne(executionRequest.getInputFile7().getId()));
 
         FileStructure userRootFolder = fileStructureRepository.findRootByUserID(user.getId()).get(0);
 

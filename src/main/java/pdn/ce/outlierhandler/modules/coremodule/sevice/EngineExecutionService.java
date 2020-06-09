@@ -1,15 +1,15 @@
 package pdn.ce.outlierhandler.modules.coremodule.sevice;
 
 import org.springframework.stereotype.Service;
+import pdn.ce.outlierhandler.modules.coremodule.util.PropertyReader;
 
 import java.util.*;
 import java.io.IOException;
 
 @Service
 public class EngineExecutionService {
-    private static final String PYTHON_PATH =
-            "C:\\Users\\PRABHA\\AppData\\Local\\Programs\\Python\\Python36\\python ";
-    private static final String SCRIPT_PATH = "\"..\\engine\\Model python file\\mahalanobis_binning.py\" "
+    private static final String PYTHON_PATH = PropertyReader.getInstance().getPythonPath();
+    private static final String SCRIPT_PATH = PropertyReader.getInstance().getEnginePath();
 //            +
 //            "\"10s\" " +
 //            "\"../engine/Model python file/sample_data/10s/10s_unbinned_contigs.OFDEG\" " +

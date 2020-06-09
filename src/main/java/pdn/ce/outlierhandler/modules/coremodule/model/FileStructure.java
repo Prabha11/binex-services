@@ -15,7 +15,7 @@ public class FileStructure {
     private boolean folder;
     @Column(name = "name")
     private String name;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<FileStructure> childFileStructures;
     @JsonIgnore
     @Column(name = "file_location")

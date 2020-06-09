@@ -31,7 +31,12 @@ public class ProcessSchedulingService {
         long executionOrderID = this.executionOrderRepository.save(executionOrder).getId();
 
         JobCard jobCard = this.getJobCard(executionOrderID, user, executionRequest);
-        boolean finished = processManagementService.startAExecutionProcess(executionOrderID);
+        ExecutionResponseData executionResponseData = processManagementService.startAExecutionProcess(executionOrderID);
+        executionResponseData.setResults(executionRequest.getOutputFile());
+        executionOrder.setExecutionResponseData(executionResponseData);
+        executionOrderService.save(executionOrder);
+
+        boolean finished = executionResponseData != null;
 
         if (finished) sendFinishMail(executionRequest);
 

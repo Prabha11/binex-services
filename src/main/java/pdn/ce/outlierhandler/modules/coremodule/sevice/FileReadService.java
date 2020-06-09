@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pdn.ce.outlierhandler.modules.coremodule.model.FileStructure;
 import pdn.ce.outlierhandler.modules.coremodule.repository.FileStructureRepository;
+import pdn.ce.outlierhandler.modules.coremodule.util.PropertyReader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,8 +18,8 @@ import java.util.stream.Stream;
 public class FileReadService {
     @Autowired
     private FileStructureRepository fileStructureRepository;
-    private static final String FILE_ROOT = "E:\\Projects\\fyp\\engine\\Model python file\\sample_data";
-    private static final String FILE_ROOT_FOR_PYTHON = "../engine/Model python file/sample_data/10s/";
+    private static final String FILE_ROOT = PropertyReader.getInstance().getFileRoot();
+    private static final String FILE_ROOT_FOR_PYTHON = PropertyReader.getInstance().getFileRootForPython();
 
     public List<String> getListOfAllFiles() throws IOException {
         Stream<Path> walk = Files.walk(Paths.get(FILE_ROOT));

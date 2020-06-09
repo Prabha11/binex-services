@@ -42,4 +42,8 @@ public class ExecutionOrderService {
         List<ExecutionOrder> executionOrders = executionOrderRepository.getOneUnfinishedExecutionOrder(pageable);
         return !executionOrders.isEmpty() ? executionOrders.get(0) : null;
     }
+
+    public ExecutionOrder save(ExecutionOrder executionOrder) {
+        return executionOrderRepository.save(executionOrder);
+    }
 }

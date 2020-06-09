@@ -19,14 +19,6 @@ public class ExecutionRequest {
     @ManyToOne(cascade = CascadeType.ALL)
     private FileStructure inputFile3;
     @ManyToOne(cascade = CascadeType.ALL)
-    private FileStructure inputFile4;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private FileStructure inputFile5;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private FileStructure inputFile6;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private FileStructure inputFile7;
-    @ManyToOne(cascade = CascadeType.ALL)
     private FileStructure outputFile;
 
     public long getId() {
@@ -75,38 +67,6 @@ public class ExecutionRequest {
 
     public void setInputFile3(FileStructure inputFile3) {
         this.inputFile3 = inputFile3;
-    }
-
-    public FileStructure getInputFile4() {
-        return inputFile4;
-    }
-
-    public void setInputFile4(FileStructure inputFile4) {
-        this.inputFile4 = inputFile4;
-    }
-
-    public FileStructure getInputFile5() {
-        return inputFile5;
-    }
-
-    public void setInputFile5(FileStructure inputFile5) {
-        this.inputFile5 = inputFile5;
-    }
-
-    public FileStructure getInputFile6() {
-        return inputFile6;
-    }
-
-    public void setInputFile6(FileStructure inputFile6) {
-        this.inputFile6 = inputFile6;
-    }
-
-    public FileStructure getInputFile7() {
-        return inputFile7;
-    }
-
-    public void setInputFile7(FileStructure inputFile7) {
-        this.inputFile7 = inputFile7;
     }
 
     public FileStructure getOutputFile() {
