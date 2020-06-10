@@ -41,7 +41,7 @@ public class EngineRunningRequestController {
         return null;
     }
 
-    @PostMapping("/exec/job-cards")
+    @GetMapping("/exec/job-cards")
     public List<JobCard> getJobCards() throws IOException {
         return jobCardRepository.findAll();
     }

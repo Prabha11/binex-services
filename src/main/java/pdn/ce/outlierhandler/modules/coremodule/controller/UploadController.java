@@ -84,14 +84,17 @@ public class UploadController {
     public StreamingResponseBody getSteamingFile(HttpServletResponse response,
                                                  @PathVariable long fileID) throws IOException {
         FileStructure file = fileStructureRepository.getOne(fileID);
-        response.setContentType("application/png");
-        response.setHeader("Content-Disposition", "attachment; filename=\"download.png\"");
-        InputStream inputStream = new FileInputStream(new File("E:\\temp\\download.png"));
+        if (file.isFolder()) return null;
+        response.setContentType("application/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" +
+                file.getName() +
+                "\"");
+        InputStream inputStream = new FileInputStream(new File(UPLOADED_FOLDER + file.getFileLocation()));
         return outputStream -> {
             int nRead;
             byte[] data = new byte[1024];
             while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-                System.out.println("Writing some bytes..");
+                System.out.print(".");
                 outputStream.write(data, 0, nRead);
             }
         };

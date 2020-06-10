@@ -65,20 +65,25 @@ public class ProcessManagementService {
                         binDataList.add(binData);
                     }
                     String oldAccuracyLine = stdInput.readLine();
+                    oldAccuracyLine = stdInput.readLine();
                     double oldAccuracy = getValueDouble(oldAccuracyLine);
                     executionResponseData.setOldAccuracy(oldAccuracy);
-
-                    String newAccuracyLine = stdInput.readLine();
-                    double newAccuracy = getValueDouble(newAccuracyLine);
-                    executionResponseData.setNewAccuracy(newAccuracy);
+                    System.out.println(oldAccuracy);
 
                     String oldPercentageLine = stdInput.readLine();
                     double oldPercentage = getValueDouble(oldPercentageLine);
                     executionResponseData.setOldPercentage(oldPercentage);
+                    System.out.println(oldPercentage);
+
+                    String newAccuracyLine = stdInput.readLine();
+                    double newAccuracy = getValueDouble(newAccuracyLine);
+                    executionResponseData.setNewAccuracy(newAccuracy);
+                    System.out.println(newAccuracy);
 
                     String newPercentageLine = stdInput.readLine();
                     double newPercentage = getValueDouble(newPercentageLine);
                     executionResponseData.setNewPercentage(newPercentage);
+                    System.out.println(newPercentage);
                 }
             }
         }
